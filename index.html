@@ -1,7 +1,198 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BuddyMate">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="msapplication-TileColor" content="#4f46e5">
+  <title>BuddyMate</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      overflow: hidden;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      background-color: #f8fafc;
+    }
+    #root {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      max-width: 100vw;
+      margin: 0 auto;
+    }
+    
+    /* Mobile-specific container */
+    .mobile-container {
+      max-width: 414px; /* iPhone 12 Pro Max width */
+      margin: 0 auto;
+      height: 100vh;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Tablet-specific container */
+    .tablet-container {
+      max-width: 768px; /* iPad width */
+      margin: 0 auto;
+      height: 100vh;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Desktop container */
+    .desktop-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      height: 100vh;
+      background: white;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Responsive breakpoints */
+    @media (max-width: 480px) {
+      #root {
+        padding: 0;
+      }
+      .mobile-container {
+        width: 100%;
+        max-width: 100vw;
+        box-shadow: none;
+      }
+    }
+    
+    @media (min-width: 481px) and (max-width: 768px) {
+      .mobile-container {
+        width: 414px;
+      }
+    }
+    
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .tablet-container {
+        width: 768px;
+      }
+    }
+    
+    @media (min-width: 1025px) {
+      .desktop-container {
+        width: 100%;
+        max-width: 1200px;
+      }
+    }
+    
+    /* Ensure scrollbars are visible */
+    ::-webkit-scrollbar {
+      width: 16px;
+      height: 16px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3498db;
+      border-radius: 8px;
+      border: 2px solid #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #2980b9;
+    }
+    /* Firefox scrollbar */
+    * {
+      scrollbar-width: auto;
+      scrollbar-color: #3498db #f1f1f1;
+    }
+    
+    /* Mobile-specific touch improvements */
+    button, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+      touch-action: manipulation;
+    }
+    
+    /* Prevent zoom on input focus */
+    input, textarea, select {
+      font-size: 16px;
+    }
+  </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+  <div id="root">
+    <div class="mobile-container" id="mobile-container">
+      <!-- Mobile content will be rendered here -->
+    </div>
+  </div>
+  
+  <script>
+    // Single Page Apps for GitHub Pages
+    // MIT License
+    // https://github.com/rafgraph/spa-github-pages
+    // This script checks to see if a redirect is present in the query string,
+    // converts it back into the correct url and adds it to the
+    // browser's history using window.history.replaceState(...),
+    // which won't cause the browser to attempt to load the new url.
+    // When the single page app is loaded further down in this file,
+    // the correct url will be waiting in the browser's history for
+    // the single page app to route accordingly.
+    (function(l) {
+        if (l.search[1] === '/' ) {
+            var decoded = l.search.slice(1).split('&').map(function(s) { 
+                return s.replace(/~and~/g, '&')
+            }).join('?');
+            window.history.replaceState(null, null,
+                l.pathname.slice(0, -1) + decoded + l.hash
+            );
+        }
+    }(window.location))
+    
+    // Auto-detect device type and apply appropriate container
+    function setDeviceContainer() {
+      const root = document.getElementById('root');
+      const mobileContainer = document.getElementById('mobile-container');
+      const width = window.innerWidth;
+      
+      // Remove existing container classes
+      mobileContainer.className = '';
+      
+      if (width <= 480) {
+        // Mobile phone
+        mobileContainer.classList.add('mobile-container');
+      } else if (width <= 768) {
+        // Large mobile / Small tablet
+        mobileContainer.classList.add('mobile-container');
+      } else if (width <= 1024) {
+        // Tablet
+        mobileContainer.classList.add('tablet-container');
+      } else {
+        // Desktop
+        mobileContainer.classList.add('desktop-container');
+      }
+    }
+    
+    // Set container on load and resize
+    window.addEventListener('load', setDeviceContainer);
+    window.addEventListener('resize', setDeviceContainer);
+  </script>
+  <!-- Webpack will inject script tags here -->
+  <script src="vendors.7e7e8c1cc09ddc26abb7.js"></script>
+  <script src="main.6f6bd47f49566a78266e.js"></script>
 </body>
 </html>
